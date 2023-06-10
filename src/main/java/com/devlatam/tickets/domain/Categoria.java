@@ -1,24 +1,22 @@
-package com.devlatam.tickets.utils;
+package com.devlatam.tickets.domain;
 
 import com.devlatam.tickets.domain.Ticket;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 
-@Entity(name = "Prioridad")
-@Table(name = "prioridad")
+@Entity(name = "Categoria")
+@Table(name = "categoria")
 @Data
-public class Prioridad {
+public class Categoria {
     @Id
     @Column(length = 1,unique = true)
     private Character codigo;
     private String nombre;
-    @OneToMany(mappedBy = "prioridad", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ticket> tickets = new HashSet<>();
 
 

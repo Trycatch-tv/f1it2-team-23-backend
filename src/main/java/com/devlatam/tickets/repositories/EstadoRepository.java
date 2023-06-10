@@ -1,9 +1,9 @@
 package com.devlatam.tickets.repositories;
 
-import com.devlatam.tickets.domain.Cliente;
+import com.devlatam.tickets.domain.Estado;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+public interface EstadoRepository extends JpaRepository<Estado, Character> {
 }

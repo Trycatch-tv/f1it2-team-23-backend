@@ -1,4 +1,4 @@
-package com.devlatam.tickets.DTO.ticket;
+package com.devlatam.tickets.dto.ticket;
 
 public record DataAsignarTicket(
         Long id,

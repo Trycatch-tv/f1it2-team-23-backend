@@ -1,7 +1,6 @@
-package com.devlatam.tickets.DTO.respuesta;
+package com.devlatam.tickets.dto.respuesta;
 
-import com.devlatam.tickets.DTO.agente.DataResponseAgente;
-import com.devlatam.tickets.DTO.ticket.DataResponseTicket;
+import com.devlatam.tickets.dto.agente.DataResponseAgente;
 
 public record DataResponseRespuesta(
         Long id,

@@ -1,4 +1,4 @@
-package com.devlatam.tickets.DTO.cliente;
+package com.devlatam.tickets.dto.cliente;
 
 public record DataResponseCliente(
         Long id,

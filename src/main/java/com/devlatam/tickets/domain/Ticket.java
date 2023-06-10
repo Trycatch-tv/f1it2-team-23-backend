@@ -1,21 +1,12 @@
 package com.devlatam.tickets.domain;
 
-import com.devlatam.tickets.DTO.ticket.DataAsignarTicket;
-import com.devlatam.tickets.DTO.ticket.DataCreacionTicket;
-import com.devlatam.tickets.utils.Categoria;
-import com.devlatam.tickets.utils.Estado;
-import com.devlatam.tickets.utils.Prioridad;
+import com.devlatam.tickets.dto.ticket.DataAsignarTicket;
+import com.devlatam.tickets.dto.ticket.DataCreacionTicket;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.hibernate.Hibernate;
-import com.devlatam.tickets.domain.Cliente;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity(name = "Ticket")
@@ -56,6 +47,9 @@ public class Ticket {
         this.categoria = categoria;
         this.prioridad = prioridad;
         this.estado = estado;
+    }
+
+    public Ticket(DataCreacionTicket dataCreacion, Cliente cliente, Prioridad prioridad, Estado estado) {
     }
 
     public void asignarTicket(DataAsignarTicket dataAsignar){
