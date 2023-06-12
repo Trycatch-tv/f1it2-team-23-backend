@@ -1,9 +1,9 @@
 package com.devlatam.tickets.dto.cliente;
 
-public record DataCreacionCliente(
+public record DataUpdateCliente(
         Long id,
         String nombre,
-        String telefono,
-        String email
+        String email,
+        String telefono
 ) {
 }

@@ -62,10 +62,6 @@ public class TicketService {
         return tickets.map(DataListTicket::new);
     }
 
-    private List<DataListReplyTicket> buildDataListReplyTicket(Ticket ticket) {
-            return ticket.getRespuestas().stream().map(DataListReplyTicket::new).collect(Collectors.toList());
-    }
-
     public DataResponseTicket asignarTicket(DataAsignarTicket dataAsignar){
         Ticket ticket = this.ticketRespository.getReferenceById(dataAsignar.id());
         ticket.updateTicket(dataAsignar,null,null,null,null);
@@ -76,6 +72,10 @@ public class TicketService {
     public void eliminarTicket(Long id){
         Ticket ticket = this.ticketRespository.getReferenceById(id);
         this.ticketRespository.delete(ticket);
+    }
+
+    private List<DataListReplyTicket> buildDataListReplyTicket(Ticket ticket) {
+        return ticket.getRespuestas().stream().map(DataListReplyTicket::new).collect(Collectors.toList());
     }
 
     private DataResponseTicket buildDataResponseTicketPut(Ticket ticket) {
