@@ -1,5 +1,6 @@
 package com.devlatam.tickets.domain;
 
+import com.devlatam.tickets.dto.agente.DataCreacionAgente;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,6 +20,12 @@ public class Agente {
     private Boolean activo;
     @OneToMany(mappedBy = "agente", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ticket> tickets = new HashSet<>();
+
+    public Agente(DataCreacionAgente dataAgente){
+        this.nombre = dataAgente.nombre();
+        this.telefono = dataAgente.telefono();
+        this.email = dataAgente.email();
+    }
 
 
 }

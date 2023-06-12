@@ -1,11 +1,14 @@
 package com.devlatam.tickets.dto.ticket;
 
+import java.util.Optional;
+
 public record DataAsignarTicket(
         Long id,
         String titulo,
         String descripcion,
-        Long agenteId,
-        Long estadoId,
-        Long prioridadId
+        Optional<Long> agenteId,
+        Optional<Long> estadoId,
+        Optional<Long> prioridadId,
+        Optional<Long> categoriaId
 ) {
 }
