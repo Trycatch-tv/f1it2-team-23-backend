@@ -16,8 +16,7 @@ public class Categoria {
     @Column(length = 1,unique = true)
     private Character codigo;
     private String nombre;
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Ticket> tickets = new HashSet<>();
+
 
 
 }
