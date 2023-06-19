@@ -18,7 +18,7 @@ public class Prioridad {
     @Column(length = 1,unique = true)
     private Character codigo;
     private String nombre;
-    
+
 
 
 }

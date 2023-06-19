@@ -1,6 +1,6 @@
 package com.devlatam.tickets.dto.respuesta;
 
-import com.devlatam.tickets.dto.agente.DataResponseAgente;
+import com.devlatam.tickets.dto.ticket.DataRespTicketReply;
 
 public record DataResponseRespuesta(
         Long id,
@@ -9,7 +9,6 @@ public record DataResponseRespuesta(
         String fechaCreacion,
         String fechaModificacion,
         Boolean finalizado,
-        DataResponseAgente agente,
-        Long ticketId
-) {
+
+        DataRespTicketReply dataRespTicketReply) {
 }

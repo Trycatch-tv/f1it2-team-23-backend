@@ -1,5 +1,6 @@
 package com.devlatam.tickets.dto.ticket;
 
+import com.devlatam.tickets.domain.*;
 import com.devlatam.tickets.dto.agente.DataResponseAgente;
 import com.devlatam.tickets.dto.categoria.DataResponseCategoria;
 import com.devlatam.tickets.dto.cliente.DataResponseCliente;
@@ -18,4 +19,5 @@ public record DataResponseTicket(
         DataResponseAgente agente
 
 ) {
+
 }

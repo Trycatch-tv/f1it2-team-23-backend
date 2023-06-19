@@ -1,8 +1,13 @@
 package com.devlatam.tickets.domain;
 
 import com.devlatam.tickets.dto.agente.DataResponseAgente;
+import com.devlatam.tickets.dto.categoria.DataResponseCategoria;
+import com.devlatam.tickets.dto.cliente.DataResponseCliente;
+import com.devlatam.tickets.dto.estado.DataResponseEstado;
+import com.devlatam.tickets.dto.prioridad.DataResponsePrioridad;
 import com.devlatam.tickets.dto.ticket.DataAsignarTicket;
 import com.devlatam.tickets.dto.ticket.DataCreacionTicket;
+import com.devlatam.tickets.dto.ticket.DataResponseTicket;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,12 +47,11 @@ public class Ticket {
 
 // Constructor para que el usuario cree el ticket
     public Ticket(DataCreacionTicket dataCreacion, Cliente cliente, Estado estado,
-                  Categoria categoria, Prioridad prioridad){
+                  Prioridad prioridad){
         this.titulo = dataCreacion.titulo();
         this.descripcion = dataCreacion.descripcion();
         this.fechaCreacion = LocalDateTime.now();
         this.cliente = cliente;
-        this.categoria = categoria;
         this.prioridad = prioridad;
         this.estado = estado;
     }
@@ -61,32 +65,8 @@ public class Ticket {
         this.categoria = categoria;
     }
 
-    public Ticket(DataCreacionTicket dataCreacion, Cliente cliente, Prioridad prioridad, Estado estado) {
-    }
-    public Ticket(Long id, DataResponseAgente agente){}
 
-    public void updateTicket(DataAsignarTicket dataAsignar, Agente agente, Categoria categoria, Prioridad prioridad,
-                             Estado estado){
-        if (dataAsignar.titulo() != null && !dataAsignar.titulo().trim().isEmpty()){
-            this.titulo = dataAsignar.titulo();
-        }
-        if (dataAsignar.descripcion() != null && !dataAsignar.descripcion().trim().isEmpty()){
-            this.descripcion = dataAsignar.descripcion();
-        }
-        if (dataAsignar.agenteId().isPresent() ){
-            this.agente = agente;
-        }
-        if (dataAsignar.categoriaId().isPresent() ){
-            this.categoria = categoria;
-        }
-        if (dataAsignar.prioridadId().isPresent() ){
-            this.prioridad = prioridad;
-        }
-        if (dataAsignar.estadoId().isPresent() ){
-            this.estado = estado;
-        }
 
-    }
 
 
 }

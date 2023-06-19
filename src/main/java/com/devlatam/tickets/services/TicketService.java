@@ -1,5 +1,6 @@
 package com.devlatam.tickets.services;
 
+import com.devlatam.tickets.domain.*;
 import com.devlatam.tickets.dto.agente.DataResponseAgente;
 import com.devlatam.tickets.dto.categoria.DataResponseCategoria;
 import com.devlatam.tickets.dto.cliente.DataResponseCliente;
@@ -7,14 +8,11 @@ import com.devlatam.tickets.dto.estado.DataResponseEstado;
 import com.devlatam.tickets.dto.prioridad.DataResponsePrioridad;
 import com.devlatam.tickets.dto.respuesta.DataListReplyTicket;
 import com.devlatam.tickets.dto.ticket.*;
-import com.devlatam.tickets.domain.Cliente;
-import com.devlatam.tickets.domain.Ticket;
 import com.devlatam.tickets.repositories.ClienteRepository;
 import com.devlatam.tickets.repositories.EstadoRepository;
 import com.devlatam.tickets.repositories.PrioridadRepository;
 import com.devlatam.tickets.repositories.TicketRespository;
-import com.devlatam.tickets.domain.Estado;
-import com.devlatam.tickets.domain.Prioridad;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,6 +28,7 @@ public class TicketService {
     private final PrioridadRepository prioridadRepository;
     private final EstadoRepository estadoRepository;
 
+    @Autowired
     public TicketService(TicketRespository ticketRespository, ClienteRepository clienteRepository,
                          PrioridadRepository prioridadRepository, EstadoRepository estadoRepository){
         this.ticketRespository = ticketRespository;
@@ -38,39 +37,46 @@ public class TicketService {
         this.estadoRepository = estadoRepository;
     }
 
-    public DataResponseCreateTicket creacionTicket(DataCreacionTicket dataCreacion){
-        Cliente cliente = this.clienteRepository.getReferenceById(dataCreacion.clienteId());
-        Prioridad prioridad = this.prioridadRepository.getReferenceById(dataCreacion.prioridadId());
-        Estado estado = this.estadoRepository.getReferenceById(dataCreacion.estadoId());
-        Ticket ticket = this.ticketRespository.save(new Ticket(dataCreacion, cliente, prioridad, estado));
+    public DataResponseCreateTicket crearTicket(DataCreacionTicket dataCreacion){
+        Cliente cliente = clienteRepository.getReferenceById(dataCreacion.clienteId());
+        Prioridad prioridad = prioridadRepository.getReferenceById(dataCreacion.prioridadId());
+        Estado estado = estadoRepository.getReferenceById(dataCreacion.estadoId());
+        Ticket ticket = ticketRespository.save(new Ticket(dataCreacion, cliente, estado, prioridad));
 
         return buildDataResponseCreateTicket(ticket);
     }
 
     public DataResponseReplyTicket buscarTicket(Long id){
-        Ticket ticket = this.ticketRespository.getReferenceById(id);
+        Ticket ticket = ticketRespository.getReferenceById(id);
         DataResponseTicket dataResponse = buildDataResponseTicket(ticket);
 
         return new DataResponseReplyTicket(dataResponse.id(), dataResponse.titulo(), dataResponse.descripcion(),
-                dataResponse.fechaCreacion(), dataResponse.categoria(), dataResponse.estado(), dataResponse.prioridad(),
-                dataResponse.cliente(), dataResponse.agente(), buildDataListReplyTicket(ticket));
-
-
+                dataResponse.fechaCreacion(), dataResponse.categoria(), dataResponse.prioridad(), dataResponse.estado(),
+                dataResponse.agente(), buildDataListReplyTicket(ticket));
     }
     public Page<DataListTicket> listarTickets(Pageable pageable){
-        Page<Ticket> tickets = this.ticketRespository.findAll(pageable);
+        Page<Ticket> tickets = ticketRespository.findAll(pageable);
         return tickets.map(DataListTicket::new);
     }
 
-    public DataResponseTicket asignarTicket(DataAsignarTicket dataAsignar){
-        Ticket ticket = this.ticketRespository.getReferenceById(dataAsignar.id());
-        ticket.updateTicket(dataAsignar,null,null,null,null);
+    public DataResponseTicket asignarTicket(DataAsignarTicket dataAsignar, Agente agente, Categoria categoria,
+                                            Estado estado, Prioridad prioridad){
+        Ticket ticket = ticketRespository.getReferenceById(dataAsignar.id());
+        if (dataAsignar.agenteId().isPresent()){
+            ticket.setAgente(agente);
+        }else if(dataAsignar.categoriaId().isPresent()){
+            ticket.setCategoria(categoria);
+        } else if (dataAsignar.estadoId().isPresent()) {
+            ticket.setEstado(estado);
+        } else if (dataAsignar.prioridadId().isPresent()) {
+            ticket.setPrioridad(prioridad);
+        }
         return buildDataResponseTicketPut(ticket);
 
     }
 
     public void eliminarTicket(Long id){
-        Ticket ticket = this.ticketRespository.getReferenceById(id);
+        Ticket ticket = ticketRespository.getReferenceById(id);
         this.ticketRespository.delete(ticket);
     }
 
